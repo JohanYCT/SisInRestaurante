@@ -1,40 +1,72 @@
-from django.shortcuts import render
- 
-# Create your views here.
+from django.shortcuts import render, redirect
 from .models import Cliente, Empleado, Mesa, Plato, Orden, Factura
- 
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+
+@login_required
 def inicio(request):
     context = {
-        'total_clientes': Cliente.objects.count(),
-        'total_empleados': Empleado.objects.count(),
-        'total_mesas': Mesa.objects.count(),
-        'total_platos': Plato.objects.count(),
-        'total_ordenes': Orden.objects.count(),
-        'total_facturas': Factura.objects.count(),
+        'Total_Clientes': Cliente.objects.count(),
+        'Total_Empleados': Empleado.objects.count(),
+        'Total_Mesas': Mesa.objects.count(),
+        'Total_Platos': Plato.objects.count(),
+        'Total_Ordenes': Orden.objects.count(),
+        'Total_Facturas': Factura.objects.count(),
     }
-    return render(request, 'gestion/inicio.html', context)
- 
-def lista_clientes(request):
-    clientes = Cliente.objects.all()
-    return render(request, 'gestion/clientes.html', {'clientes': clientes})
- 
-def lista_empleados(request):
-    empleados = Empleado.objects.all()
-    return render(request, 'gestion/empleados.html', {'empleados': empleados})
- 
-def lista_mesas(request):
-    mesas = Mesa.objects.all()
-    return render(request, 'gestion/mesas.html', {'mesas': mesas})
- 
-def lista_platos(request):
-    platos = Plato.objects.all()
-    return render(request, 'gestion/platos.html', {'platos': platos})
- 
-def lista_ordenes(request):
-    ordenes = Orden.objects.all()
-    return render(request, 'gestion/ordenes.html', {'ordenes': ordenes})
- 
-def lista_facturas(request):
-    facturas = Factura.objects.all()
-    return render(request, 'gestion/facturas.html', {'facturas': facturas})
+    return render(request, 'Gestion/inicio.html', context)
 
+@login_required
+def clientes(request):
+    clientes = Cliente.objects.all()
+    return render(request, 'Gestion/clientes.html', {'clientes': clientes})
+
+@login_required
+def empleados(request):
+    empleados = Empleado.objects.all()
+    return render(request, 'Gestion/empleados.html', {'empleados': empleados})
+
+@login_required
+def mesas(request):
+    mesas = Mesa.objects.all()
+    return render(request, 'Gestion/mesas.html', {'mesas': mesas})
+
+@login_required
+def platos(request):
+    platos = Plato.objects.all()
+    return render(request, 'Gestion/platos.html', {'platos': platos})
+
+@login_required
+def ordenes(request):
+    ordenes = Orden.objects.all()
+    return render(request, 'Gestion/ordenes.html', {'ordenes': ordenes})
+
+@login_required
+def facturas(request):
+    facturas = Factura.objects.all()
+    return render(request, 'Gestion/facturas.html', {'facturas': facturas})
+
+
+
+
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('/')
+        else:
+            return render(request, 'gestion/login.html', {
+                'error': 'Usuario o contraseña incorrectos'
+            })
+
+    return render(request, 'gestion/login.html')
+
+
+# LOGOUT
+def logout_view(request):
+    logout(request)
+    return redirect('/login/')

@@ -1,7 +1,6 @@
 from decimal import Decimal
 from django.db import models
 
-
 class Cliente(models.Model):
     nombre = models.CharField(max_length=100)
     telefono = models.CharField(max_length=20, blank=True, null=True)
@@ -12,7 +11,6 @@ class Cliente(models.Model):
 
     def __str__(self):
         return self.nombre
-
 
 class Empleado(models.Model):
     CARGOS = [
@@ -34,7 +32,6 @@ class Empleado(models.Model):
     def __str__(self):
         return f"{self.nombre} - {self.cargo}"
 
-
 class Mesa(models.Model):
     ESTADOS_MESA = [
         ('Disponible', 'Disponible'),
@@ -52,7 +49,6 @@ class Mesa(models.Model):
     def __str__(self):
         return f"Mesa {self.numero_mesa}"
 
-
 class Plato(models.Model):
     nombre_plato = models.CharField(max_length=100)
     descripcion = models.TextField(blank=True, null=True)
@@ -65,7 +61,6 @@ class Plato(models.Model):
 
     def __str__(self):
         return self.nombre_plato
-
 
 class Orden(models.Model):
     ESTADOS_ORDEN = [
@@ -89,6 +84,9 @@ class Orden(models.Model):
     def __str__(self):
         return f"Orden {self.id} - {self.cliente.nombre}"
 
+    def update_total(self):
+        self.total = sum((detalle.subtotal or Decimal('0.00')) for detalle in self.detalles.all())
+        self.save(update_fields=['total'])
 
 class DetalleOrden(models.Model):
     orden = models.ForeignKey(Orden, on_delete=models.CASCADE, related_name='detalles')
@@ -104,14 +102,11 @@ class DetalleOrden(models.Model):
         self.precio_unitario = self.plato.precio
         self.subtotal = Decimal(self.cantidad) * self.precio_unitario
         super().save(*args, **kwargs)
-
-        total_orden = sum((detalle.subtotal or Decimal('0.00')) for detalle in self.orden.detalles.all())
-        self.orden.total = total_orden
-        self.orden.save()
+        # Update order total after save
+        self.orden.update_total()
 
     def __str__(self):
         return f"Detalle {self.id} - Orden {self.orden.id}"
-
 
 class Factura(models.Model):
     METODOS_PAGO = [
@@ -134,4 +129,3 @@ class Factura(models.Model):
 
     def __str__(self):
         return f"Factura {self.id} - Orden {self.orden.id}"
-

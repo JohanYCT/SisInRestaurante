@@ -1,0 +1,43 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Pasta La Vista</title>
+
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+<body>
+
+<div class="login-container">
+
+    <div class="login-box">
+
+        <h1>Pasta La Vista</h1>
+        <p>Administrador del Restaurante</p>
+
+        {% if error %}
+            <div class="error">
+                {{ error }}
+            </div>
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <input type="text" name="username" placeholder="Usuario" required>
+
+            <input type="password" name="password" placeholder="Contraseña" required>
+
+            <button type="submit">
+                Iniciar Sesión
+            </button>
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

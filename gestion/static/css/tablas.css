@@ -1,0 +1,36 @@
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+}
+
+table th{
+    background:#111827;
+    color:white;
+    padding:16px;
+}
+
+table td{
+    padding:14px;
+    border-bottom:1px solid #e5e7eb;
+}
+
+table tr:hover{
+    background:#f9fafb;
+}
+
+/* BOTONES */
+
+.btn{
+    display:inline-block;
+    background:#dc2626;
+    color:white;
+    padding:10px 18px;
+    border-radius:10px;
+    text-decoration:none;
+    transition:0.3s;
+}
+
+.btn:hover{
+    background:#991b1b;
+}
