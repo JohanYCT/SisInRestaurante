@@ -1,7 +1,10 @@
 {% extends 'gestion/base.html' %}
 
 {% block content %}
-<h2>Órdenes</h2>
+<div class="page-header">
+    <h2>Órdenes</h2>
+    <a class="button button-primary" href="{% url 'orden_create' %}">Nueva Orden</a>
+</div>
 <table>
     <tr>
         <th>ID</th>
@@ -11,6 +14,7 @@
         <th>Fecha</th>
         <th>Estado</th>
         <th>Total</th>
+        <th>Acciones</th>
     </tr>
     {% for orden in ordenes %}
     <tr>
@@ -21,6 +25,14 @@
         <td>{{ orden.fecha_hora }}</td>
         <td>{{ orden.estado_orden }}</td>
         <td>{{ orden.total }}</td>
+        <td>
+            <a href="{% url 'orden_update' orden.pk %}">Editar</a> |
+            <a href="{% url 'orden_delete' orden.pk %}">Eliminar</a>
+        </td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="8">No hay órdenes registradas.</td>
     </tr>
     {% endfor %}
 </table>

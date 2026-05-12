@@ -1,7 +1,10 @@
 {% extends 'gestion/base.html' %}
 
 {% block content %}
-<h2>Empleados</h2>
+<div class="page-header">
+    <h2>Empleados</h2>
+    <a class="button button-primary" href="{% url 'empleado_create' %}">Nuevo Empleado</a>
+</div>
 <table>
     <tr>
         <th>ID</th>
@@ -9,6 +12,7 @@
         <th>Cargo</th>
         <th>Teléfono</th>
         <th>Correo</th>
+        <th>Acciones</th>
     </tr>
     {% for empleado in empleados %}
     <tr>
@@ -17,6 +21,14 @@
         <td>{{ empleado.cargo }}</td>
         <td>{{ empleado.telefono }}</td>
         <td>{{ empleado.correo }}</td>
+        <td>
+            <a href="{% url 'empleado_update' empleado.pk %}">Editar</a> |
+            <a href="{% url 'empleado_delete' empleado.pk %}">Eliminar</a>
+        </td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="6">No hay empleados registrados.</td>
     </tr>
     {% endfor %}
 </table>

@@ -7,6 +7,7 @@
 body{
     font-family:'Segoe UI',sans-serif;
     background:#f1f5f9;
+    color:#0f172a;
 }
 
 /* LAYOUT */
@@ -55,6 +56,7 @@ body{
 .contenido{
     flex:1;
     padding:25px;
+    color:#0f172a;
 }
 
 /* TOPBAR */
@@ -71,9 +73,129 @@ body{
     color:#111827;
 }
 
+.page-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    margin-bottom:24px;
+}
+
+.page-header h2{
+    font-size:1.75rem;
+    color:#111827;
+}
+
+.button,
+.btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:0.85rem 1.4rem;
+    border-radius:12px;
+    font-weight:600;
+    text-decoration:none;
+    border:1px solid transparent;
+    transition:all 0.25s ease;
+    cursor:pointer;
+}
+
+.button-primary{
+    background:#111827;
+    color:#ffffff;
+}
+
+.button-primary:hover{
+    background:#022969;
+}
+
+.button-secondary{
+    background:#f3f4f6;
+    color:#111827;
+    border-color:#d1d5db;
+}
+
+.button-secondary:hover{
+    background:#e5e7eb;
+}
+
+.button-danger{
+    background:#dc2626;
+    color:#ffffff;
+}
+
+.button-danger:hover{
+    background:#b91c1c;
+}
+
+.form-container{
+    background:#ffffff;
+    padding:28px;
+    border-radius:20px;
+    box-shadow:0px 8px 30px rgba(15,23,42,0.08);
+    border:1px solid #e5e7eb;
+    max-width:760px;
+    margin:0 auto;
+}
+
+.form-container h2{
+    margin-bottom:20px;
+    color:#111827;
+}
+
+.form-container form p{
+    margin-bottom:16px;
+}
+
+.form-container label{
+    display:block;
+    margin-bottom:8px;
+    color:#374151;
+    font-weight:600;
+}
+
+.form-container input,
+.form-container select,
+.form-container textarea{
+    width:100%;
+    padding:12px 14px;
+    border:1px solid #d1d5db;
+    border-radius:12px;
+    background:#f9fafb;
+    color:#0f172a;
+    font-size:1rem;
+}
+
+.form-container input::placeholder,
+.form-container textarea::placeholder{
+    color:#94a3b8;
+}
+
+.form-container input:focus,
+.form-container select:focus,
+.form-container textarea:focus{
+    outline:none;
+    border-color:#111827;
+    background:#ffffff;
+}
+
+.form-container .errorlist{
+    color:#dc2626;
+    margin:0 0 12px;
+    font-size:0.95rem;
+}
+
 .contenedor{
     background:white;
     padding:30px;
     border-radius:18px;
     box-shadow:0px 4px 12px rgba(0,0,0,0.08);
+}
+
+.cards a{
+    text-decoration:none;
+}
+
+.card{
+    color:#111827;
 }

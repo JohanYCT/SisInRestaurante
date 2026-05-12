@@ -9,15 +9,22 @@
 
         <h2>Registro Administrador</h2>
 
-        <input type="text" name="username" placeholder="Usuario">
+        {% if form.errors %}
+            <div class="error">
+                Por favor verifica los datos e inténtalo nuevamente.
+            </div>
+        {% endif %}
 
-        <input type="password" name="password" placeholder="Contraseña">
+        <input type="text" name="username" placeholder="Usuario" value="{{ form.username.value|default_if_none:'' }}" required>
+
+        <input type="password" name="password1" placeholder="Contraseña" required>
+
+        <input type="password" name="password2" placeholder="Confirmar contraseña" required>
 
         <button type="submit">Registrarse</button>
 
-        <p>
-            ¿Ya tienes cuenta?
-            <a href="/login/">Iniciar sesión</a>
+        <p class="register-note">
+            ¿Ya tienes cuenta? <a href="{% url 'login' %}">Iniciar sesión</a>
         </p>
 
     </form>

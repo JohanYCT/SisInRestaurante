@@ -2,35 +2,62 @@ table{
     width:100%;
     border-collapse:collapse;
     margin-top:20px;
+    font-size:0.96rem;
+    color:#0f172a;
 }
 
 table th{
     background:#111827;
     color:white;
     padding:16px;
+    text-align:left;
 }
 
 table td{
-    padding:14px;
+    padding:16px;
     border-bottom:1px solid #e5e7eb;
+    color:#334155;
 }
 
 table tr:hover{
-    background:#f9fafb;
+    background:#f8fafc;
+}
+
+table a{
+    color:#1d4ed8;
+    text-decoration:none;
+    font-weight:600;
+    margin-right:10px;
+}
+
+table a:hover{
+    text-decoration:underline;
+}
+
+.table-actions{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.table-empty td{
+    padding:28px;
+    text-align:center;
+    color:#64748b;
 }
 
 /* BOTONES */
 
 .btn{
     display:inline-block;
-    background:#dc2626;
+    background:#111827;
     color:white;
     padding:10px 18px;
-    border-radius:10px;
+    border-radius:12px;
     text-decoration:none;
     transition:0.3s;
 }
 
 .btn:hover{
-    background:#991b1b;
+    background:#374151;
 }
