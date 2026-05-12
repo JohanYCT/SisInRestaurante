@@ -4,7 +4,8 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Login - Pasta La Vista</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión | Pasta La Vista</title>
 
     <link rel="stylesheet" href="{% static 'css/login.css' %}">
 </head>
@@ -12,13 +13,19 @@
 
 <div class="login-container">
 
-    <div class="login-box">
+    <div class="login-card">
 
-        <h1>Pasta La Vista</h1>
-        <p>Administrador del Restaurante</p>
+        <div class="logo">
+        <img src="{% static 'img/logo.png' %}" alt="Logo">
+        </div>
+
+        <div class="login-header">
+            <h1>Pasta La Vista</h1>
+            <p>Sistema Administrativo</p>
+        </div>
 
         {% if error %}
-            <div class="error">
+            <div class="error-box">
                 {{ error }}
             </div>
         {% endif %}
@@ -26,16 +33,26 @@
         <form method="POST">
             {% csrf_token %}
 
-            <input type="text" name="username" placeholder="Usuario" required>
+            <div class="input-group">
+                <input type="text" name="username" placeholder="Usuario" required>
+            </div>
 
-            <input type="password" name="password" placeholder="Contraseña" required>
+            <div class="input-group">
+                <input type="password" name="password" placeholder="Contraseña" required>
+            </div>
 
-            <button type="submit">
+            <button type="submit" class="login-btn">
                 Iniciar Sesión
             </button>
         </form>
 
-        <p class="register-note">¿No tienes cuenta? <a href="{% url 'register' %}">Regístrate aquí</a></p>
+        <div class="login-footer">
+            <p>Panel administrativo del restaurante</p>
+            <p>Proximamente login de empleados y clientes</p>
+            <p>Johan Casasbuenas_Desarrollador</p>
+            
+        </div>
+
     </div>
 
 </div>
