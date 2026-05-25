@@ -7,6 +7,7 @@ BASE_WIDGET = {
     'placeholder': '',
 }
 
+
 class ClienteForm(forms.ModelForm):
     class Meta:
         model = Cliente
@@ -17,16 +18,37 @@ class ClienteForm(forms.ModelForm):
             'correo': forms.EmailInput(attrs={**BASE_WIDGET, 'placeholder': 'Correo electrónico'}),
         }
 
+
 class EmpleadoForm(forms.ModelForm):
+    password = forms.CharField(
+        required=False,
+        widget=forms.PasswordInput(attrs={**BASE_WIDGET, 'placeholder': 'Contraseña (para login)'}),
+        help_text='Deja vacío para no cambiar la contraseña al editar. En la creación se recomienda llenarla.',
+    )
+
+    def clean(self):
+        cleaned_data = super().clean()
+        # Validación simple para evitar correos vacíos
+        correo = cleaned_data.get('correo')
+        if correo:
+            cleaned_data['correo'] = correo.strip().lower()
+        return cleaned_data
+
+
     class Meta:
         model = Empleado
-        fields = ['nombre', 'cargo', 'telefono', 'correo']
+        fields = ['nombre', 'cargo', 'telefono', 'correo', 'password']
         widgets = {
             'nombre': forms.TextInput(attrs={**BASE_WIDGET, 'placeholder': 'Nombre completo'}),
             'cargo': forms.Select(attrs={**BASE_WIDGET}),
             'telefono': forms.TextInput(attrs={**BASE_WIDGET, 'placeholder': 'Teléfono'}),
             'correo': forms.EmailInput(attrs={**BASE_WIDGET, 'placeholder': 'Correo electrónico'}),
         }
+
+
+
+
+
 
 class MesaForm(forms.ModelForm):
     class Meta:
@@ -37,6 +59,7 @@ class MesaForm(forms.ModelForm):
             'capacidad': forms.NumberInput(attrs={**BASE_WIDGET, 'placeholder': 'Capacidad'}),
             'estado_mesa': forms.Select(attrs={**BASE_WIDGET}),
         }
+
 
 class PlatoForm(forms.ModelForm):
     class Meta:
@@ -50,16 +73,26 @@ class PlatoForm(forms.ModelForm):
             'disponible': forms.CheckboxInput(attrs={'class': 'form-checkbox'}),
         }
 
+
 class OrdenForm(forms.ModelForm):
     class Meta:
         model = Orden
-        fields = ['cliente', 'empleado', 'mesa', 'estado_orden']
+        # estado_orden debe quedar por defecto (ej: 'Activa') al crear una orden
+        fields = ['cliente', 'empleado', 'mesa']
         widgets = {
             'cliente': forms.Select(attrs={**BASE_WIDGET}),
             'empleado': forms.Select(attrs={**BASE_WIDGET}),
             'mesa': forms.Select(attrs={**BASE_WIDGET}),
-            'estado_orden': forms.Select(attrs={**BASE_WIDGET}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Solo mostrar mesas disponibles para evitar asignar mesas ocupadas.
+        self.fields['mesa'].queryset = Mesa.objects.filter(estado_mesa='Disponible')
+
+
+
+
 
 class FacturaForm(forms.ModelForm):
     class Meta:
@@ -79,3 +112,4 @@ class FacturaForm(forms.ModelForm):
         if commit:
             factura.save()
         return factura
+

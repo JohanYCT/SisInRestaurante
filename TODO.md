@@ -1,11 +1,6 @@
-# TODO: Fix tabs/indentation in gestion/models.py
+- [ ] Revisar flujo actual de login (empleado vs admin) en `gestion/views.py`
+- [ ] Implementar Opción 2: al crear/editar `Empleado`, crear/actualizar también un usuario `auth.User` con username=correo y contraseña definida por el admin (incluye template y formulario)
+- [ ] Actualizar `EmpleadoForm` y la vista `empleado_create/empleado_update` para guardar contraseña
+- [ ] Actualizar `gestion/templates/gestion/empleado_form.html` para mostrar campos de contraseña
+- [ ] Probar: crear empleado nuevo y loguearse con /login/
 
-- [x] Step 1: Standardize indentation to 4 spaces in gestion/models.py
-- [x] Step 2: Fix class Meta nesting and syntax
-- [x] Step 3: Fix method indentations (__str__, save)
-- [x] Step 4: Fix DetalleOrden.save() logic to avoid recursion
-- [ ] Step 5: Setup venv and install Django
-- [ ] Step 6: Run python manage.py makemigrations gestion
-Step 7: Test syntax OK
-- [x] Step 6: Syntax test passed
-- [ ] Step 7: Mark complete

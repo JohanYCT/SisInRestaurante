@@ -11,5 +11,10 @@
             <a class="button button-secondary" href="{% url 'empleados' %}">Cancelar</a>
         </div>
     </form>
+
+    {% if object %}
+        <p class="help-text">Deja la contraseña vacía si no deseas cambiarla.</p>
+    {% endif %}
 </div>
 {% endblock %}
+

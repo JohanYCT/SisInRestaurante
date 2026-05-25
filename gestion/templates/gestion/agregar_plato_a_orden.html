@@ -1,0 +1,16 @@
+{% extends 'gestion/base.html' %}
+{% block content %}
+<h2>Agregar Plato a la Orden #{{ orden.id }}</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {% if form.errors %}
+        <div style="color:red; margin:8px 0;">
+            <b>Errores:</b>
+            {{ form.errors }}
+        </div>
+    {% endif %}
+    <button type="submit" class="btn btn-primary">Agregar Plato</button>
+    <a href="{% url 'ordenes' %}" class="btn btn-secondary">Volver a Órdenes</a>
+</form>
+{% endblock %}

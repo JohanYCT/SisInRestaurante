@@ -1,0 +1,28 @@
+{% extends 'gestion/base.html' %}
+
+{% block content %}
+<div class="form-container">
+    <h2>Generar Factura desde Orden #{{ orden.id }}</h2>
+
+    <form method="post" class="space-y-4">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label>Método de pago</label>
+            <select name="metodo_pago" class="form-input" required>
+                <option value="Efectivo">Efectivo</option>
+                <option value="Tarjeta">Tarjeta</option>
+                <option value="Transferencia">Transferencia</option>
+                <option value="Nequi">Nequi</option>
+                <option value="Daviplata">Daviplata</option>
+            </select>
+        </div>
+
+        <div class="flex items-center gap-3">
+            <button type="submit" class="button button-primary">Generar</button>
+            <a class="button button-secondary" href="{% url 'facturas' %}">Cancelar</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
+

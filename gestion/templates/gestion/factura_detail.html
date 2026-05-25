@@ -1,0 +1,22 @@
+{% extends 'gestion/base.html' %}
+
+{% block content %}
+<div class="page-header">
+    <h2>Factura #{{ factura.id }}</h2>
+    <a class="button button-secondary" href="{% url 'facturas' %}">Volver</a>
+</div>
+
+<table>
+    <tr><th>Orden</th><td>#{{ factura.orden.id }}</td></tr>
+    <tr><th>Fecha</th><td>{{ factura.fecha_factura }}</td></tr>
+    <tr><th>Cliente</th><td>{{ factura.orden.cliente.nombre }}</td></tr>
+    <tr><th>Empleado</th><td>{{ factura.orden.empleado.nombre }}</td></tr>
+    <tr><th>Mesa</th><td>{{ factura.orden.mesa.numero_mesa }}</td></tr>
+    <tr><th>Subtotal</th><td>{{ factura.subtotal }}</td></tr>
+    <tr><th>Impuesto</th><td>{{ factura.impuesto }}</td></tr>
+    <tr><th>Total</th><td>{{ factura.total_factura }}</td></tr>
+    <tr><th>Método de pago</th><td>{{ factura.metodo_pago }}</td></tr>
+</table>
+
+{% endblock %}
+

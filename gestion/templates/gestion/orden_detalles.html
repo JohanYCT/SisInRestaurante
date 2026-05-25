@@ -1,0 +1,44 @@
+{% extends 'gestion/base.html' %}
+
+{% block content %}
+<h2>Detalle de la Orden #{{ orden.id }}</h2>
+
+<div style="margin: 12px 0;">
+    <div><b>Mesa:</b> {{ orden.mesa.numero_mesa }}</div>
+    <div><b>Cliente:</b> {{ orden.cliente.nombre }}</div>
+    <div><b>Empleado:</b> {{ orden.empleado.nombre }}</div>
+    <div><b>Estado:</b> {{ orden.estado_orden }}</div>
+    <div><b>Total:</b> {{ orden.total }}</div>
+</div>
+
+<div style="margin: 12px 0;">
+    <a class="btn btn-secondary" href="{% url 'ordenes' %}">Volver</a>
+    {% if orden.estado_orden != 'Cancelada' and orden.estado_orden != 'Facturada' %}
+        <a class="btn btn-primary" href="{% url 'agregar_plato_a_orden' orden.id %}">Agregar plato</a>
+    {% endif %}
+</div>
+
+<h3>Platos agregados</h3>
+<table>
+    <tr>
+        <th>Plato</th>
+        <th>Cantidad</th>
+        <th>Precio unitario</th>
+        <th>Subtotal</th>
+    </tr>
+    {% for detalle in detalles %}
+    <tr>
+        <td>{{ detalle.plato.nombre_plato }}</td>
+        <td>{{ detalle.cantidad }}</td>
+        <td>{{ detalle.precio_unitario }}</td>
+        <td>{{ detalle.subtotal }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="4">Aún no hay platos agregados.</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
+

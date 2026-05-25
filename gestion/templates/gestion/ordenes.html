@@ -26,9 +26,17 @@
         <td>{{ orden.estado_orden }}</td>
         <td>{{ orden.total }}</td>
         <td>
-            <a href="{% url 'orden_update' orden.pk %}">Editar</a> |
-            <a href="{% url 'orden_delete' orden.pk %}">Eliminar</a>
+            {% if orden.estado_orden != 'Cancelada' and orden.estado_orden != 'Facturada' %}
+                <div class="actions">
+                    <a href="{% url 'orden_detalles' orden.pk %}" class="btn btn-secondary btn-sm">Ver platos</a>
+                    <a href="{% url 'orden_delete' orden.pk %}" class="btn btn-danger btn-sm">Cancelar</a>
+
+                </div>
+            {% else %}
+                <span class="badge badge-cancelada">{{ orden.estado_orden }}</span>
+            {% endif %}
         </td>
+
     </tr>
     {% empty %}
     <tr>
@@ -37,3 +45,4 @@
     {% endfor %}
 </table>
 {% endblock %}
+

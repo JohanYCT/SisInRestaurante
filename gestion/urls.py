@@ -25,14 +25,22 @@ urlpatterns = [
     path('platos/<int:pk>/eliminar/', views.plato_delete, name='plato_delete'),
 
     path('ordenes/', views.ordenes, name='ordenes'),
+    path('ordenes/<int:pk>/detalle/', views.orden_detalles, name='orden_detalles'),
+
     path('ordenes/nuevo/', views.orden_create, name='orden_create'),
     path('ordenes/<int:pk>/editar/', views.orden_update, name='orden_update'),
     path('ordenes/<int:pk>/eliminar/', views.orden_delete, name='orden_delete'),
 
+    path('ordenes/<int:orden_id>/agregar-plato/', views.agregar_plato_a_orden, name='agregar_plato_a_orden'),
+
     path('facturas/', views.facturas, name='facturas'),
-    path('facturas/nueva/', views.factura_create, name='factura_create'),
-    path('facturas/<int:pk>/editar/', views.factura_update, name='factura_update'),
+
+
+    path('facturas/orden/<int:orden_id>/crear/', views.factura_create_from_orden, name='factura_create_from_orden'),
+    path('facturas/<int:pk>/', views.factura_detail, name='factura_detail'),
+
     path('facturas/<int:pk>/eliminar/', views.factura_delete, name='factura_delete'),
+
 
     path('login/', login_view, name='login'),
     path('registro/', register_view, name='register'),

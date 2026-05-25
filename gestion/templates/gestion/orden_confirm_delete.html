@@ -2,11 +2,13 @@
 
 {% block content %}
 <div class="form-container">
-    <h2>Eliminar Orden</h2>
-    <p>¿Estás seguro de que deseas eliminar la orden <strong>#{{ object.id }}</strong>?</p>
+    <h2>Cancelar Orden</h2>
+    <p>¿Estás seguro de que deseas cancelar la orden <strong>#{{ object.id }}</strong>?</p>
+
     <form method="post" class="mt-4 space-x-3">
         {% csrf_token %}
-        <button type="submit" class="button button-danger">Eliminar</button>
+        <button type="submit" class="button button-danger">Aceptar</button>
+
         <a class="button button-secondary" href="{% url 'ordenes' %}">Cancelar</a>
     </form>
 </div>
