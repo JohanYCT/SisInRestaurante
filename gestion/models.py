@@ -21,6 +21,7 @@ class Empleado(models.Model):
         ('Administrador', 'Administrador'),
     ]
 
+    user = models.OneToOneField('auth.User', on_delete=models.CASCADE, related_name='empleado', null=True, blank=True)
     nombre = models.CharField(max_length=100)
     cargo = models.CharField(max_length=50, choices=CARGOS)
     telefono = models.CharField(max_length=20, blank=True, null=True)

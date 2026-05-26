@@ -4,6 +4,11 @@ from .views import login_view, logout_view, register_view
 
 urlpatterns = [
     path('', views.inicio, name='inicio'),
+    path('mesero/', views.inicio_mesero, name='inicio_mesero'),
+    path('mesero/mesas/', views.mesas_mesero, name='mesas_mesero'),
+    path('mesero/ordenes/', views.ordenes_mesero, name='ordenes_mesero'),
+    path('mesero/menu/', views.menu_mesero, name='menu_mesero'),
+    path('mesero/clientes/', views.clientes_mesero, name='clientes_mesero'),
     path('clientes/', views.clientes, name='clientes'),
     path('clientes/nuevo/', views.cliente_create, name='cliente_create'),
     path('clientes/<int:pk>/editar/', views.cliente_update, name='cliente_update'),

@@ -1,0 +1,95 @@
+{% extends 'gestion/base.html' %}
+
+{% block content %}
+
+<h2>Panel del Mesero</h2>
+
+<div class="cards">
+
+    <a href="/mesas/" class="card">
+        <h3>Mesas</h3>
+        <p>Consultar mesas disponibles y ocupadas.</p>
+    </a>
+
+    <a href="/ordenes/" class="card">
+        <h3>Órdenes</h3>
+        <p>Registrar y consultar pedidos de clientes.</p>
+    </a>
+
+    <a href="/platos/" class="card">
+        <h3>Menú</h3>
+        <p>Visualizar platos disponibles del restaurante.</p>
+    </a>
+
+    <a href="/clientes/" class="card">
+        <h3>Clientes</h3>
+        <p>Consultar información básica de clientes.</p>
+    </a>
+
+</div>
+
+<hr>
+
+<h3>Estado de Mesas</h3>
+
+<div class="cards">
+
+    {% for mesa in mesas %}
+
+        {% if mesa.estado_mesa == "Disponible" %}
+
+            <div class="card" style="border-left: 6px solid green;">
+                <h3>Mesa {{ mesa.numero_mesa }}</h3>
+                <p>Estado: Disponible</p>
+            </div>
+
+        {% else %}
+
+            <div class="card" style="border-left: 6px solid red;">
+                <h3>Mesa {{ mesa.numero_mesa }}</h3>
+                <p>Estado: Ocupada</p>
+            </div>
+
+        {% endif %}
+
+    {% endfor %}
+
+</div>
+
+<hr>
+
+<h3>Órdenes Recientes</h3>
+
+<table>
+
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Mesa</th>
+            <th>Estado</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        {% for orden in ordenes %}
+
+        <tr>
+            <td>{{ orden.id }}</td>
+            <td>Mesa {{ orden.mesa.numero }}</td>
+            <td>{{ orden.estado_orden }}</td>
+        </tr>
+
+        {% empty %}
+
+        <tr>
+            <td colspan="3">No hay órdenes registradas.</td>
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+
+{% endblock %}

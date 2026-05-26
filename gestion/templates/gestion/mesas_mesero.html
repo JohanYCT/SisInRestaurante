@@ -1,0 +1,67 @@
+{% extends 'gestion/base.html' %}
+
+{% block content %}
+
+<h2>Gestión de Mesas</h2>
+
+<div class="cards">
+
+    {% for mesa in mesas %}
+
+        {% if mesa.estado_mesa == "Disponible" %}
+
+            <div class="card" style="border-left: 6px solid green;">
+
+                <h3>Mesa {{ mesa.numero_mesa }}</h3>
+
+                <p>
+                    <strong>Estado:</strong>
+                    Disponible
+                </p>
+
+                <p>
+                    <strong>Capacidad:</strong>
+                    {{ mesa.capacidad }} personas
+                </p>
+
+                <a href="/ordenes/nuevo/" class="btn">
+                    Crear Orden
+                </a>
+
+            </div>
+
+        {% else %}
+
+            <div class="card" style="border-left: 6px solid red;">
+
+                <h3>Mesa {{ mesa.numero_mesa }}</h3>
+
+                <p>
+                    <strong>Estado:</strong>
+                    Ocupada
+                </p>
+
+                <p>
+                    <strong>Capacidad:</strong>
+                    {{ mesa.capacidad }} personas
+                </p>
+
+                <a href="/ordenes/" class="btn">
+                    Ver Órdenes
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    {% empty %}
+
+        <div class="card">
+            <h3>No hay mesas registradas</h3>
+        </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

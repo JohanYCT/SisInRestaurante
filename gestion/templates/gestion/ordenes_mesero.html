@@ -1,0 +1,54 @@
+{% extends 'gestion/base.html' %}
+
+{% block content %}
+
+<h2>Órdenes</h2>
+
+<div class="cards">
+
+    {% for orden in ordenes %}
+
+    <div class="card">
+
+        <h3>Orden #{{ orden.id }}</h3>
+
+        <p>
+            <strong>Mesa:</strong>
+            Mesa {{ orden.mesa.numero }}
+        </p>
+
+        <p>
+            <strong>Estado:</strong>
+            {{ orden.estado_orden }}
+        </p>
+
+        <p>
+            <strong>Total:</strong>
+            $ {{ orden.total }}
+        </p>
+
+        <div style="margin-top: 15px;">
+
+            <a href="/ordenes/{{ orden.id }}/detalle/" class="btn">
+                Ver Detalles
+            </a>
+
+            <a href="/ordenes/{{ orden.id }}/agregar-plato/" class="btn">
+                Agregar Plato
+            </a>
+
+        </div>
+
+    </div>
+
+    {% empty %}
+
+    <div class="card">
+        <h3>No hay órdenes registradas</h3>
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

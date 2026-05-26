@@ -1,0 +1,47 @@
+{% extends 'gestion/base.html' %}
+
+{% block content %}
+
+<h2>Menú del Restaurante</h2>
+
+<div class="cards">
+
+    {% for plato in platos %}
+
+    <div class="card">
+
+        <h3>{{ plato.nombre }}</h3>
+
+        <p>
+            <strong>Precio:</strong>
+            $ {{ plato.precio }}
+        </p>
+
+        <p>
+            <strong>Descripción:</strong>
+            {{ plato.descripcion }}
+        </p>
+
+        <p>
+            <strong>Estado:</strong>
+
+            {% if plato.disponible %}
+                Disponible
+            {% else %}
+                No disponible
+            {% endif %}
+        </p>
+
+    </div>
+
+    {% empty %}
+
+    <div class="card">
+        <h3>No hay platos registrados</h3>
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

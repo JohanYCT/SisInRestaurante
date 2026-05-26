@@ -1,0 +1,37 @@
+{% extends 'gestion/base.html' %}
+
+{% block content %}
+
+<h2>Clientes</h2>
+
+<div class="cards">
+
+    {% for cliente in clientes %}
+
+    <div class="card">
+
+        <h3>{{ cliente.nombre }}</h3>
+
+        <p>
+            <strong>Teléfono:</strong>
+            {{ cliente.telefono }}
+        </p>
+
+        <p>
+            <strong>Correo:</strong>
+            {{ cliente.correo }}
+        </p>
+
+    </div>
+
+    {% empty %}
+
+    <div class="card">
+        <h3>No hay clientes registrados</h3>
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

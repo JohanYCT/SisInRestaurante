@@ -345,40 +345,181 @@ def factura_delete(request, pk):
 
 
 def login_view(request):
+
     if request.user.is_authenticated:
         return redirect("inicio")
 
     error = None
+
     if request.method == "POST":
+
         username = (request.POST.get("username") or "").strip()
         password = request.POST.get("password")
 
-        # Modo administración: acceso fijo
+        # ADMIN PRINCIPAL
         if username == "nimda" and password == "nimda321":
-            # Asegurar usuario en auth (admin de Django).
+
             user, _created = User.objects.get_or_create(
                 username="nimda",
-                defaults={"is_staff": True, "is_superuser": True},
+                defaults={
+                    "is_staff": True,
+                    "is_superuser": True,
+                },
             )
-            # Resguardar contraseña (por simplicidad se fuerza al valor conocido).
+
             if not user.check_password(password):
                 user.set_password(password)
                 user.save(update_fields=["password"])
 
             login(request, user)
+
             return redirect("inicio")
 
-        # Empleado: username = empleado.correo
-        user = authenticate(request, username=username, password=password)
+        # LOGIN EMPLEADOS
+        user = authenticate(
+            request,
+            username=username,
+            password=password
+        )
+
         if user is not None:
+
             login(request, user)
+
+            try:
+                empleado = Empleado.objects.get(correo=username)
+
+                # ADMINISTRADOR
+                if empleado.cargo == "Administrador":
+                    return redirect("inicio")
+
+                # MESEROS
+                elif empleado.cargo in ("Mesero", "Mesera"):
+                    return redirect("inicio_mesero")
+
+            except Empleado.DoesNotExist:
+                pass
+
             return redirect("inicio")
 
         error = "Usuario o contraseña incorrectos"
 
-    return render(request, "gestion/login.html", {"error": error})
+    return render(
+        request,
+        "gestion/login.html",
+        {"error": error}
+    )
+
+@login_required
+def inicio_mesero(request):
+
+    mesas = Mesa.objects.all()
+    ordenes = Orden.objects.all()
+    platos = Plato.objects.all()
+    clientes = Cliente.objects.all()
+
+    context = {
+        "mesas": mesas,
+        "ordenes": ordenes,
+        "platos": platos,
+        "clientes": clientes,
+    }
+
+    return render(
+        request,
+        "gestion/inicio_mesero.html",
+        context
+    )
+    
+# =========================================
+# VALIDAR SI ES MESERO
+# =========================================
+
+def es_mesero(user):
+
+    try:
+        empleado = Empleado.objects.get(correo=user.username)
+
+        return empleado.cargo in ["Mesero", "Mesera"]
+
+    except Empleado.DoesNotExist:
+        return False
 
 
+# =========================================
+# MESAS DEL MESERO
+# =========================================
+
+@login_required
+def mesas_mesero(request):
+
+    if not es_mesero(request.user):
+        return redirect("inicio")
+
+    mesas = Mesa.objects.all()
+
+    return render(
+        request,
+        "gestion/mesas_mesero.html",
+        {"mesas": mesas}
+    )
+
+
+# =========================================
+# ÓRDENES DEL MESERO
+# =========================================
+
+@login_required
+def ordenes_mesero(request):
+
+    if not es_mesero(request.user):
+        return redirect("inicio")
+
+    ordenes = Orden.objects.all()
+
+    return render(
+        request,
+        "gestion/ordenes_mesero.html",
+        {"ordenes": ordenes}
+    )
+
+
+# =========================================
+# MENÚ / PLATOS
+# =========================================
+
+@login_required
+def menu_mesero(request):
+
+    if not es_mesero(request.user):
+        return redirect("inicio")
+
+    platos = Plato.objects.all()
+
+    return render(
+        request,
+        "gestion/menu_mesero.html",
+        {"platos": platos}
+    )
+
+
+# =========================================
+# CLIENTES
+# =========================================
+
+@login_required
+def clientes_mesero(request):
+
+    if not es_mesero(request.user):
+        return redirect("inicio")
+
+    clientes = Cliente.objects.all()
+
+    return render(
+        request,
+        "gestion/clientes_mesero.html",
+        {"clientes": clientes}
+    )
 
 def register_view(request):
     if request.user.is_authenticated:
@@ -401,3 +542,5 @@ def register_view(request):
 def logout_view(request):
     logout(request)
     return redirect("login")
+
+
