@@ -1,0 +1,58 @@
+{% extends 'gestion/base.html' %}
+
+{% block content %}
+
+<h2>Panel Cajero</h2>
+
+<div class="cards">
+
+    <a href="/ordenes-cajero/" class="card">
+        <h3>Órdenes</h3>
+        <p>Consultar órdenes pendientes y estados.</p>
+    </a>
+
+    <a href="/facturas-cajero/" class="card">
+        <h3>Facturación</h3>
+        <p>Generar y consultar facturas.</p>
+    </a>
+
+    <a href="/ventas-cajero/" class="card">
+        <h3>Ventas</h3>
+        <p>Consultar historial de ventas.</p>
+    </a>
+
+</div>
+
+<hr>
+
+<h3>Órdenes Pendientes</h3>
+
+<table>
+
+    <tr>
+        <th>Mesa</th>
+        <th>Estado</th>
+        <th>Total</th>
+    </tr>
+
+    {% for orden in ordenes_pendientes %}
+
+    <tr>
+        <td>Mesa {{ orden.mesa.numero_mesa }}</td>
+        <td>{{ orden.estado_orden }}</td>
+        <td>${{ orden.total }}</td>
+    </tr>
+
+    {% empty %}
+
+    <tr>
+        <td colspan="3">
+            No hay órdenes pendientes.
+        </td>
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+{% endblock %}

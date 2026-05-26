@@ -1,0 +1,54 @@
+{% extends 'gestion/base.html' %}
+
+{% block content %}
+
+<h2>Facturación</h2>
+
+<table>
+
+    <tr>
+        <th>ID</th>
+        <th>Mesa</th>
+        <th>Total</th>
+        <th>Acciones</th>
+    </tr>
+
+    {% for orden in ordenes_pendientes %}
+
+    <tr>
+        <td>{{ orden.id }}</td>
+
+        <td>
+            Mesa {{ orden.mesa.numero_mesa }}
+        </td>
+
+        <td>
+            ${{ orden.total }}
+        </td>
+
+        <td>
+
+            <a
+                href="/facturas/orden/{{ orden.id }}/crear/"
+                class="btn"
+            >
+                Facturar
+            </a>
+
+        </td>
+
+    </tr>
+
+    {% empty %}
+
+    <tr>
+        <td colspan="4">
+            No hay órdenes pendientes por facturar.
+        </td>
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+{% endblock %}

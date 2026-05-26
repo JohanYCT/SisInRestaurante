@@ -50,4 +50,9 @@ urlpatterns = [
     path('login/', login_view, name='login'),
     path('registro/', register_view, name='register'),
     path('logout/', logout_view, name='logout'),
+    
+    path('inicio-cajero/', views.inicio_cajero, name='inicio_cajero'),
+    path('ordenes-cajero/', views.ordenes_cajero, name='ordenes_cajero'),
+    path('facturas-cajero/', views.facturas_cajero, name='facturas_cajero'),
+    path('ventas-cajero/', views.ventas_cajero, name='ventas_cajero'),
 ]

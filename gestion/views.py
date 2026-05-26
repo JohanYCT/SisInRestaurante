@@ -396,6 +396,10 @@ def login_view(request):
                 # MESEROS
                 elif empleado.cargo in ("Mesero", "Mesera"):
                     return redirect("inicio_mesero")
+                
+                # CAJEROS
+                elif empleado.cargo in ("Cajero", "Cajera"):
+                    return redirect("inicio_cajero")
 
             except Empleado.DoesNotExist:
                 pass
@@ -519,6 +523,111 @@ def clientes_mesero(request):
         request,
         "gestion/clientes_mesero.html",
         {"clientes": clientes}
+    )
+    
+# =========================================
+# VALIDAR SI ES CAJERO
+# =========================================
+
+def es_cajero(user):
+
+    try:
+        empleado = Empleado.objects.get(correo=user.username)
+
+        return empleado.cargo in ["Cajero", "Cajera"]
+
+    except Empleado.DoesNotExist:
+        return False
+
+
+# =========================================
+# PANEL PRINCIPAL CAJERO
+# =========================================
+
+@login_required
+def inicio_cajero(request):
+
+    if not es_cajero(request.user):
+        return redirect("inicio")
+
+    ordenes = Orden.objects.all()
+    facturas = Factura.objects.all()
+
+    context = {
+        "ordenes": ordenes,
+        "facturas": facturas,
+    }
+
+    return render(
+        request,
+        "gestion/inicio_cajero.html",
+        context
+    )
+
+
+# =========================================
+# ÓRDENES CAJERO
+# =========================================
+
+@login_required
+def ordenes_cajero(request):
+
+    if not es_cajero(request.user):
+        return redirect("inicio")
+
+    ordenes = Orden.objects.all()
+
+    return render(
+        request,
+        "gestion/ordenes_cajero.html",
+        {"ordenes": ordenes}
+    )
+
+
+# =========================================
+# FACTURAS CAJERO
+# =========================================
+
+@login_required
+def facturas_cajero(request):
+
+    if not es_cajero(request.user):
+        return redirect("inicio")
+
+    facturas = Factura.objects.all()
+
+    return render(
+        request,
+        "gestion/facturas_cajero.html",
+        {"facturas": facturas}
+    )
+
+
+# =========================================
+# HISTORIAL DE VENTAS
+# =========================================
+
+@login_required
+def ventas_cajero(request):
+
+    if not es_cajero(request.user):
+        return redirect("inicio")
+
+    facturas = Factura.objects.all()
+
+    total_ventas = sum(
+        factura.total_factura for factura in facturas
+    )
+
+    context = {
+        "facturas": facturas,
+        "total_ventas": total_ventas,
+    }
+
+    return render(
+        request,
+        "gestion/ventas_cajero.html",
+        context
     )
 
 def register_view(request):

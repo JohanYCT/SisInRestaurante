@@ -1,0 +1,52 @@
+{% extends 'gestion/base.html' %}
+
+{% block content %}
+
+<h2>Historial de Ventas</h2>
+
+<h3>Total vendido: ${{ total_ventas }}</h3>
+
+<table>
+
+    <tr>
+        <th>Factura</th>
+        <th>Mesa</th>
+        <th>Método Pago</th>
+        <th>Total</th>
+    </tr>
+
+    {% for factura in facturas %}
+
+    <tr>
+
+        <td>
+            {{ factura.id }}
+        </td>
+
+        <td>
+            Mesa {{ factura.orden.mesa.numero_mesa }}
+        </td>
+
+        <td>
+            {{ factura.metodo_pago }}
+        </td>
+
+        <td>
+            ${{ factura.total_factura }}
+        </td>
+
+    </tr>
+
+    {% empty %}
+
+    <tr>
+        <td colspan="4">
+            No hay ventas registradas.
+        </td>
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+{% endblock %}
